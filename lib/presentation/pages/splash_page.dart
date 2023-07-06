@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../core/route/route_names.dart';
 import '../logic/bloc/splash/splash_bloc.dart';
 
 class SplashPage extends StatelessWidget {
@@ -27,11 +28,11 @@ class SplashView extends StatelessWidget {
       listener: (context, state) {
         if (state is SplashLoginChecked) {
           if (state.isLogin == true) {
-            context.pushReplacement('/home');
-            //Navigator.push(context, MaterialPageRoute(builder: (_) => const HomePage()));
+            String userName = "Kapil R Singh";
+            String id = "101";
+            context.goNamed(RouteNames.home, pathParameters: {"userName": userName}, queryParameters: {'id': id});
           } else {
-            context.pushReplacement('/login');
-            //Navigator.push(context, MaterialPageRoute(builder: (_) => const LoginPage()));
+            context.go('/login');
           }
         }
       },

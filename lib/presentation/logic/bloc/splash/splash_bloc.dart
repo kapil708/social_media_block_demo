@@ -10,7 +10,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     on<SplashLoginCheck>((event, emit) async {
       await Future.delayed(const Duration(seconds: 2));
 
-      emit(SplashLoginChecked(false));
+      emit(SplashLoginChecked(true));
     });
   }
 }

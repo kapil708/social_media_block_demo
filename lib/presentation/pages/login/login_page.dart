@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:social_media_block_demo/presentaton/logic/bloc/login/login_bloc.dart';
+import 'package:social_media_block_demo/presentation/logic/bloc/login/login_bloc.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -29,8 +29,8 @@ class LoginView extends StatelessWidget {
             final snackBar = SnackBar(content: Text(state.message));
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           } else if (state is LoginStateSuccess) {
-            context.pushReplacement('/home');
-            //Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const HomePage()));
+            String userName = "Kapil R Singh";
+            context.go('/home/$userName');
           }
         },
         builder: (context, state) {
