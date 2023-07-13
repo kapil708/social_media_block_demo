@@ -6,7 +6,7 @@ part 'login_model.g.dart';
 @JsonSerializable()
 class LoginModel extends LoginEntity {
   // const LoginModel({required String authToken}) : super(authToken: authToken);
-  const LoginModel({required super.authToken});
+  const LoginModel({required super.token});
 
   factory LoginModel.fromJson(Map<String, dynamic> json) => _$LoginModelFromJson(json);
 

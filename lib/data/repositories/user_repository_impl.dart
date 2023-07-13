@@ -14,10 +14,10 @@ class UserRepositoryImpl implements UserRepository {
   UserRepositoryImpl({required this.remoteDataSource, required this.networkInfo});
 
   @override
-  Future<Either<Failure, LoginEntity>> login({required String userName, required String password}) async {
+  Future<Either<Failure, LoginEntity>> login(Map<String, dynamic> body) async {
     if (await networkInfo.isConnected) {
       try {
-        final login = await remoteDataSource.login(username: userName, password: password);
+        final login = await remoteDataSource.login(body);
         return Right(login);
       } on ServerException catch (e) {
         return Left(ServerFailure(

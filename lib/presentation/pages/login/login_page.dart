@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:social_media_block_demo/injection_container.dart';
 import 'package:social_media_block_demo/presentation/logic/bloc/login/login_bloc.dart';
+
+import '../../../core/route/route_names.dart';
 
 class LoginPage extends StatelessWidget {
   const LoginPage({super.key});
@@ -9,7 +12,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LoginBloc(),
+      create: (context) => locator.get<LoginBloc>(),
       child: const LoginView(),
     );
   }
@@ -30,7 +33,8 @@ class LoginView extends StatelessWidget {
             ScaffoldMessenger.of(context).showSnackBar(snackBar);
           } else if (state is LoginStateSuccess) {
             String userName = "Kapil R Singh";
-            context.go('/home/$userName');
+            String id = "101";
+            context.goNamed(RouteNames.home, pathParameters: {"userName": userName}, queryParameters: {'id': id});
           }
         },
         builder: (context, state) {
