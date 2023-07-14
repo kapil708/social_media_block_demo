@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_media_block_demo/injection_container.dart';
-import 'package:social_media_block_demo/presentation/logic/bloc/login/login_bloc.dart';
+import 'package:social_media_block_demo/presentation/bloc/login/login_bloc.dart';
 
 import '../../../core/route/route_names.dart';
 

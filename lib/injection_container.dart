@@ -6,7 +6,7 @@ import 'package:social_media_block_demo/core/network/network_info.dart';
 import 'package:social_media_block_demo/data/data_sources/local_data_source.dart';
 import 'package:social_media_block_demo/data/repositories/user_repository_impl.dart';
 import 'package:social_media_block_demo/domain/usecases/login_usecase.dart';
-import 'package:social_media_block_demo/presentation/logic/bloc/login/login_bloc.dart';
+import 'package:social_media_block_demo/presentation/bloc/login/login_bloc.dart';
 
 import 'data/data_sources/remote_data_source.dart';
 import 'domain/repositories/user_repository.dart';
