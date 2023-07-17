@@ -23,7 +23,7 @@ class LoginStateFailed extends LoginState {
 }
 
 class LoginStateException extends LoginState {
-  final String message;
+  final String? message;
 
   LoginStateException(this.message);
 

@@ -29,8 +29,10 @@ class LoginView extends StatelessWidget {
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
           if (state is LoginStateException) {
-            final snackBar = SnackBar(content: Text(state.message));
-            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            if (state.message != null) {
+              final snackBar = SnackBar(content: Text(state.message!));
+              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+            }
           } else if (state is LoginStateSuccess) {
             String userName = "Kapil R Singh";
             String id = "101";

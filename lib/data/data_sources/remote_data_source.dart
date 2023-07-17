@@ -8,6 +8,7 @@ part 'api_methods.dart';
 
 abstract class RemoteDataSource {
   Future<LoginModel> login(Map<String, dynamic> body);
+  Future<LoginModel> generateOTP(Map<String, dynamic> body);
 }
 
 class RemoteDataSourceImpl extends RemoteDataSource {
@@ -28,17 +29,33 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       },
     );
 
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 || response.statusCode == 201) {
+      var data = jsonDecode(response.body);
+      return LoginModel.fromJson(data['data']);
+    } else {
+      return Future.error(handleErrorResponse(response));
+    }
+  }
+
+  @override
+  Future<LoginModel> generateOTP(Map<String, dynamic> body) async {
+    String url = '$baseUrl${ApiMethods.generateOTP}';
+
+    final http.Response response = await client.post(
+      Uri.parse(url),
+      body: jsonEncode(body),
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+    );
+
+    if (response.statusCode == 200 || response.statusCode == 201) {
       var data = jsonDecode(response.body);
       print("::: data : $data");
       return LoginModel.fromJson(data['data']);
     } else {
-      var data = jsonDecode(response.body);
-      throw ServerException(
-        statusCode: response.statusCode,
-        data: data['data'],
-        message: data['message'] ?? 'Server exception',
-      );
+      return Future.error(handleErrorResponse(response));
     }
   }
 
@@ -58,12 +75,23 @@ class RemoteDataSourceImpl extends RemoteDataSource {
       var data = jsonDecode(response.body);
       return LoginModel.fromJson(data['data']);
     } else {
-      var data = jsonDecode(response.body);
-      throw ServerException(
-        statusCode: response.statusCode,
-        data: data['data'],
-        message: data['message'] ?? 'Server exception',
-      );
+      return Future.error(handleErrorResponse(response));
     }
+  }
+}
+
+Exception handleErrorResponse(http.Response response) {
+  var data = jsonDecode(response.body);
+
+  if (response.statusCode == 422) {
+    return ValidationException(
+      errors: data['errors'],
+      message: data['message'] ?? 'Validation failed',
+    );
+  } else {
+    return ServerException(
+      statusCode: response.statusCode,
+      message: data['message'] ?? 'Server exception',
+    );
   }
 }

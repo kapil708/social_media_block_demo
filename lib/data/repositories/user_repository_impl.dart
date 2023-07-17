@@ -19,12 +19,10 @@ class UserRepositoryImpl implements UserRepository {
       try {
         final login = await remoteDataSource.login(body);
         return Right(login);
+      } on ValidationException catch (e) {
+        return Left(ValidationFailure(errors: e.errors, message: e.message));
       } on ServerException catch (e) {
-        return Left(ServerFailure(
-          statusCode: e.statusCode,
-          data: e.data,
-          message: e.message,
-        ));
+        return Left(ServerFailure(statusCode: e.statusCode, message: e.message));
       }
     } else {
       return Left(CacheFailure());

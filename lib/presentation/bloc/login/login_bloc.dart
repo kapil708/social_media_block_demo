@@ -43,14 +43,21 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
     });
   }
 
-  String _mapFailureToMessage(Failure failure) {
+  String? _mapFailureToMessage(Failure failure) {
     switch (failure.runtimeType) {
+      case ValidationFailure:
+        ValidationFailure vf = failure as ValidationFailure;
+        if (vf.errors != null) {
+          return vf.errors['message']?[0] ?? vf.errors['username']?[0];
+        } else {
+          return vf.message;
+        }
       case ServerFailure:
         return (failure as ServerFailure).message;
       case CacheFailure:
-        return 'cacheFailureMessage';
+        return 'No internet connected';
       default:
-        return 'Unexpected error';
+        return null;
     }
   }
 }
