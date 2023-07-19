@@ -14,7 +14,7 @@ class LoginStateLoading extends LoginState {
 }
 
 class LoginStateFailed extends LoginState {
-  final String message;
+  final String? message;
 
   LoginStateFailed(this.message);
 

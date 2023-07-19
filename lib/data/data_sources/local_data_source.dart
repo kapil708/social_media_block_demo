@@ -6,6 +6,7 @@ import '../../core/error/exceptions.dart';
 
 abstract class LocalDataSource {
   Future<bool> isLogin();
+  String? getAuthToken();
   Future<void> cacheAuthToken(String authToken);
 }
 
@@ -33,5 +34,15 @@ class LocalDataSourceImpl implements LocalDataSource {
   @override
   Future<void> cacheAuthToken(String authToken) {
     return sharedPreferences.setString(_authToken, jsonEncode(authToken));
+  }
+
+  @override
+  String? getAuthToken() {
+    try {
+      final String? jsonString = sharedPreferences.getString(_authToken);
+      return jsonString;
+    } on Exception catch (e) {
+      throw CacheException();
+    }
   }
 }

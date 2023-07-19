@@ -14,8 +14,6 @@ class SplashPage extends StatelessWidget {
       create: (_) => SplashBloc()..add(SplashLoginCheck()),
       child: const SplashView(),
     );
-
-    return const SplashView();
   }
 }
 

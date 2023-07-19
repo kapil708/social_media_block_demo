@@ -118,17 +118,18 @@ class LoginView extends StatelessWidget {
                             }
                           },
                         ),
-                        if (state is LoginStateFailed)
-                          Column(
-                            children: [
-                              const SizedBox(height: 16),
-                              Text(
-                                state.message,
+                        if (state is LoginStateFailed && state.message != null)
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(top: 16),
+                              child: Text(
+                                state.message!,
                                 style: Theme.of(context).textTheme.bodyMedium?.copyWith(
                                       color: Theme.of(context).colorScheme.error,
                                     ),
                               ),
-                            ],
+                            ),
                           ),
                         const SizedBox(height: 40),
                         FilledButton(

@@ -30,7 +30,15 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
         final response = await loginUseCase.call(formData);
 
         response.fold(
-          (failure) => emit(LoginStateException(_mapFailureToMessage(failure))),
+          (failure) {
+            String? message = _mapFailureToMessage(failure);
+
+            if (failure.runtimeType == ValidationFailure) {
+              emit(LoginStateFailed(message));
+            } else {
+              emit(LoginStateException(message));
+            }
+          },
           (data) {
             String authToken = data.token;
             localDataSource.cacheAuthToken(authToken);

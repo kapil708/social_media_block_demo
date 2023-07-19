@@ -10,14 +10,12 @@ import 'package:social_media_block_demo/presentation/bloc/login/login_bloc.dart'
 
 import 'data/data_sources/remote_data_source.dart';
 import 'domain/repositories/user_repository.dart';
-import 'presentation/bloc/login_with_otp/login_with_otp_bloc.dart';
 
 final GetIt locator = GetIt.instance;
 
 Future<void> setUp() async {
   // Features
   locator.registerLazySingleton(() => LoginBloc(loginUseCase: locator(), localDataSource: locator()));
-  locator.registerLazySingleton(() => LoginWithOtpBloc());
 
   // Use Case
   locator.registerLazySingleton(() => LoginUseCase(userRepository: locator()));
