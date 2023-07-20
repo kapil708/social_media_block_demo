@@ -41,6 +41,9 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
           },
           (data) {
             String authToken = data.token;
+
+            print("::: authToken : $authToken");
+
             localDataSource.cacheAuthToken(authToken);
             emit(LoginStateSuccess());
           },

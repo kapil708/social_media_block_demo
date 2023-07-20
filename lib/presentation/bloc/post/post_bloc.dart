@@ -12,8 +12,24 @@ class PostBloc extends Bloc<PostEvent, PostState> {
   final PostUseCase postUseCase;
 
   PostBloc({required this.postUseCase}) : super(PostInitial()) {
-    on<PostLoading>((event, emit) {
-      emit(PostLoadingState());
+    on<PostLoading>((event, emit) async {
+      try {
+        emit(PostLoadingState());
+
+        var formData = {
+          'skip': 0,
+          'take': 15,
+        };
+
+        final response = await postUseCase.call(formData);
+
+        response.fold(
+          (failure) => emit(PostFailedState('Failed')),
+          (data) => emit(PostLoadedState(data)),
+        );
+      } on Exception catch (e) {
+        emit(PostExceptionState(e.toString()));
+      }
     });
   }
 }

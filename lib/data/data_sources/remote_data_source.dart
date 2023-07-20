@@ -43,9 +43,13 @@ class RemoteDataSourceImpl extends RemoteDataSource {
     final LocalDataSource localDatSource = locator.get<LocalDataSource>();
 
     String authToken = localDatSource.getAuthToken() ?? '';
+    Uri url = getUrlWithParams(ApiMethods.posts, body);
+
+    print("Uri: ${url.toString()}");
+    print("AuthToken: $authToken");
 
     final http.Response response = await client.get(
-      getUrlWithParams(ApiMethods.login, body),
+      url,
       headers: {
         ...?_headers,
         "Authorization": "Bearer $authToken",
@@ -54,8 +58,12 @@ class RemoteDataSourceImpl extends RemoteDataSource {
 
     if (response.statusCode == 200) {
       var data = jsonDecode(response.body);
+
+      print("::: post data: $data");
+
       return (data['data'] as List<dynamic>?)?.map((post) => PostModel.fromJson(post)).toList() ?? [];
     } else {
+      print(response.body);
       return Future.error(handleErrorResponse(response));
     }
   }

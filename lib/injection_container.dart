@@ -19,8 +19,8 @@ final GetIt locator = GetIt.instance;
 
 Future<void> setUp() async {
   // Features
-  locator.registerLazySingleton(() => LoginBloc(loginUseCase: locator(), localDataSource: locator()));
-  locator.registerLazySingleton(() => PostBloc(postUseCase: locator()));
+  locator.registerFactory(() => LoginBloc(loginUseCase: locator(), localDataSource: locator()));
+  locator.registerFactory(() => PostBloc(postUseCase: locator()));
 
   // Use Case
   locator.registerLazySingleton(() => LoginUseCase(userRepository: locator()));

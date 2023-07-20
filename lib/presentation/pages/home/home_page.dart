@@ -22,17 +22,21 @@ class HomeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Home')),
-      body: Column(
-        children: [
-          Text(
-            "Hi, $userName \nWelcome to home. Your id is $id",
-            style: Theme.of(context).textTheme.titleLarge,
-          ),
-          ElevatedButton(
-            onPressed: () => context.goNamed(RouteNames.post),
-            child: const Text("Go to post screen"),
-          ),
-        ],
+      body: Container(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          children: [
+            Text(
+              "Hi, $userName \nWelcome to home. Your id is $id",
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () => context.goNamed(RouteNames.post),
+              child: const Text("Go to post screen"),
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../core/error/exceptions.dart';
@@ -33,7 +31,7 @@ class LocalDataSourceImpl implements LocalDataSource {
 
   @override
   Future<void> cacheAuthToken(String authToken) {
-    return sharedPreferences.setString(_authToken, jsonEncode(authToken));
+    return sharedPreferences.setString(_authToken, authToken);
   }
 
   @override
