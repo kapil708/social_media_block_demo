@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:social_media_block_demo/presentation/pages/home/home_page.dart';
 import 'package:social_media_block_demo/presentation/pages/login/login_page.dart';
+import 'package:social_media_block_demo/presentation/pages/post/post_page.dart';
 import 'package:social_media_block_demo/presentation/pages/splash_page.dart';
 
 import '../../data/data_sources/local_data_source.dart';
@@ -34,14 +35,21 @@ class AppRouter {
         builder: (context, state) => const LoginPage(),
       ),
       GoRoute(
-        path: '/home/:userName',
+        path: '/home',
         name: RouteNames.home,
         builder: (context, state) {
-          var id = state.queryParameters['id']!;
-          var userName = state.pathParameters['userName']!;
+          var id = state.queryParameters['id'] ?? '1';
+          var userName = state.queryParameters['userName'] ?? 'Kapil';
 
           return HomePage(id: id, userName: userName);
         },
+        routes: [
+          GoRoute(
+            path: 'post',
+            name: RouteNames.post,
+            builder: (context, state) => const PostPage(),
+          ),
+        ],
       ),
     ],
   );

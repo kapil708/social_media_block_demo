@@ -25,7 +25,7 @@ class UserRepositoryImpl implements UserRepository {
         return Left(ServerFailure(statusCode: e.statusCode, message: e.message));
       }
     } else {
-      return Left(CacheFailure());
+      return Left(NetworkFailure());
     }
   }
 }

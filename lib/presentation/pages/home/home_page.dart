@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:social_media_block_demo/core/route/route_names.dart';
 
 class HomePage extends StatelessWidget {
   final String id;
@@ -25,6 +27,10 @@ class HomeView extends StatelessWidget {
           Text(
             "Hi, $userName \nWelcome to home. Your id is $id",
             style: Theme.of(context).textTheme.titleLarge,
+          ),
+          ElevatedButton(
+            onPressed: () => context.goNamed(RouteNames.post),
+            child: const Text("Go to post screen"),
           ),
         ],
       ),

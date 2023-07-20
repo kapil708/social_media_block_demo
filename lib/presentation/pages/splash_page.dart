@@ -28,7 +28,7 @@ class SplashView extends StatelessWidget {
           if (state.isLogin == true) {
             String userName = "Kapil R Singh";
             String id = "101";
-            context.goNamed(RouteNames.home, pathParameters: {"userName": userName}, queryParameters: {'id': id});
+            context.goNamed(RouteNames.home, queryParameters: {'id': id, "userName": userName});
           } else {
             context.go('/login');
           }
