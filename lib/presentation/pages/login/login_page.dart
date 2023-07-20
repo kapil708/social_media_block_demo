@@ -13,18 +13,20 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => locator.get<LoginBloc>(),
-      child: const LoginView(),
+      child: LoginView(),
     );
   }
 }
 
 class LoginView extends StatelessWidget {
-  const LoginView({super.key});
+  LoginView({super.key});
+
+  final formData = GlobalKey<FormState>();
+  final TextEditingController txtUserName = TextEditingController();
+  final TextEditingController txtPassword = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    final loginBloc = context.read<LoginBloc>();
-
     return Scaffold(
       body: BlocConsumer<LoginBloc, LoginState>(
         listener: (context, state) {
@@ -47,7 +49,7 @@ class LoginView extends StatelessWidget {
               children: [
                 SingleChildScrollView(
                   child: Form(
-                    key: loginBloc.formData,
+                    key: formData,
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
@@ -64,7 +66,7 @@ class LoginView extends StatelessWidget {
                         ),
                         const SizedBox(height: 60),
                         TextFormField(
-                          controller: loginBloc.txtUserName,
+                          controller: txtUserName,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
@@ -92,7 +94,7 @@ class LoginView extends StatelessWidget {
                         ),
                         const SizedBox(height: 20),
                         TextFormField(
-                          controller: loginBloc.txtPassword,
+                          controller: txtPassword,
                           decoration: InputDecoration(
                             fillColor: Colors.white,
                             filled: true,
@@ -134,13 +136,11 @@ class LoginView extends StatelessWidget {
                         const SizedBox(height: 40),
                         FilledButton(
                           onPressed: () {
-                            if (loginBloc.formData.currentState!.validate()) {
-                              context.read<LoginBloc>().add(
-                                    LoginClick(
-                                      loginBloc.txtUserName.text,
-                                      loginBloc.txtPassword.text,
-                                    ),
-                                  );
+                            if (formData.currentState!.validate()) {
+                              context.read<LoginBloc>().add(LoginClick(
+                                    txtUserName.text,
+                                    txtPassword.text,
+                                  ));
                             }
                           },
                           style: FilledButton.styleFrom(

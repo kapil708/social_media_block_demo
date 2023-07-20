@@ -17,7 +17,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
         emit(PostLoadingState());
 
         var formData = {
-          'skip': 0,
+          'skip': event.pageKey,
           'take': 15,
         };
 
@@ -25,7 +25,7 @@ class PostBloc extends Bloc<PostEvent, PostState> {
 
         response.fold(
           (failure) => emit(PostFailedState('Failed')),
-          (data) => emit(PostLoadedState(data)),
+          (data) => emit(PostLoadedState(event.pageKey, data)),
         );
       } on Exception catch (e) {
         emit(PostExceptionState(e.toString()));

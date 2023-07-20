@@ -4,6 +4,10 @@ part of 'post_bloc.dart';
 abstract class PostEvent extends Equatable {}
 
 class PostLoading extends PostEvent {
+  final int pageKey;
+
+  PostLoading(this.pageKey);
+
   @override
   List<Object?> get props => [];
 }

@@ -13,10 +13,6 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   final LoginUseCase loginUseCase;
   final LocalDataSource localDataSource;
 
-  var formData = GlobalKey<FormState>();
-  TextEditingController txtUserName = TextEditingController();
-  TextEditingController txtPassword = TextEditingController();
-
   LoginBloc({required this.loginUseCase, required this.localDataSource}) : super(LoginStateInitial()) {
     on<LoginClick>((event, emit) async {
       try {

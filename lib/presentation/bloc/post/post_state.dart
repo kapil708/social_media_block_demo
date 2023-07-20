@@ -32,9 +32,10 @@ class PostExceptionState extends PostState {
 }
 
 class PostLoadedState extends PostState {
+  final int pageKey;
   final List<PostEntity> postList;
 
-  PostLoadedState(this.postList);
+  PostLoadedState(this.pageKey, this.postList);
 
   @override
   List<Object?> get props => [postList];
