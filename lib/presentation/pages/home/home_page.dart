@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_media_block_demo/core/route/route_names.dart';
+import 'package:social_media_block_demo/data/data_sources/local_data_source.dart';
+import 'package:social_media_block_demo/injection_container.dart';
 
 class HomePage extends StatelessWidget {
   final String id;
@@ -21,7 +23,18 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Home')),
+      appBar: AppBar(
+        title: const Text('Home'),
+        actions: [
+          IconButton(
+            onPressed: () async {
+              await locator.get<LocalDataSource>().removeAuthToken();
+              context.goNamed(RouteNames.login);
+            },
+            icon: const Icon(Icons.logout),
+          ),
+        ],
+      ),
       body: Container(
         padding: const EdgeInsets.all(16),
         child: Column(
