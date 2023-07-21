@@ -47,17 +47,18 @@ class HomeView extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            Text(
-              "Hi, $userName \nWelcome to home. Your id is $id",
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            Text(
-              l10n.onboarding,
-              style: Theme.of(context).textTheme.titleLarge,
+            ElevatedButton(
+              onPressed: () => context.goNamed(RouteNames.post),
+              child: const Text("Go to post screen"),
             ),
             const SizedBox(height: 24),
             Text("Translation", style: Theme.of(context).textTheme.titleLarge),
             const SizedBox(height: 16),
+            Text(
+              l10n.onboarding,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 8),
             BlocBuilder<AppBloc, AppState>(
               builder: (context, state) {
                 return ListView.separated(
@@ -118,11 +119,6 @@ class HomeView extends StatelessWidget {
                   },
                 );
               },
-            ),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () => context.goNamed(RouteNames.post),
-              child: const Text("Go to post screen"),
             ),
           ],
         ),

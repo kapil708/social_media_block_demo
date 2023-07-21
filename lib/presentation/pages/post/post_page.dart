@@ -11,7 +11,7 @@ class PostPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider<PostBloc>(
-      create: (context) => locator.get<PostBloc>(),
+      create: (_) => locator.get<PostBloc>(),
       child: const PostView(),
     );
   }
