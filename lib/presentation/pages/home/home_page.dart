@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:social_media_block_demo/core/route/route_names.dart';
 import 'package:social_media_block_demo/data/data_sources/local_data_source.dart';
 import 'package:social_media_block_demo/injection_container.dart';
+
+import '../../../core/language/language.dart';
+import '../../bloc/language/language_bloc.dart';
 
 class HomePage extends StatelessWidget {
   final String id;
@@ -22,6 +27,8 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -42,6 +49,40 @@ class HomeView extends StatelessWidget {
             Text(
               "Hi, $userName \nWelcome to home. Your id is $id",
               style: Theme.of(context).textTheme.titleLarge,
+            ),
+            Text(
+              l10n.onboarding,
+              style: Theme.of(context).textTheme.titleLarge,
+            ),
+            const SizedBox(height: 24),
+            BlocBuilder<LanguageBloc, LanguageState>(
+              builder: (context, state) {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: Language.values.length,
+                  itemBuilder: (context, index) {
+                    Language language = Language.values[index];
+
+                    return ListTile(
+                      leading: Image.asset(language.image, height: 32, width: 32),
+                      title: Text(language.text),
+                      trailing: language == state.selectedLanguage ? const Icon(Icons.check_circle_rounded) : null,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: language == state.selectedLanguage ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5) : BorderSide(color: Colors.grey[300]!),
+                      ),
+                      tileColor: language == state.selectedLanguage ? Theme.of(context).colorScheme.primary.withOpacity(0.05) : null,
+                      onTap: () {
+                        context.read<LanguageBloc>().add(ChangeLanguage(selectedLanguage: language));
+                        //Future.delayed(const Duration(milliseconds: 300)).then((value) => Navigator.of(context).pop());
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 16.0);
+                  },
+                );
+              },
             ),
             const SizedBox(height: 16),
             ElevatedButton(
