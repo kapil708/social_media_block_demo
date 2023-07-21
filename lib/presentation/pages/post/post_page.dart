@@ -47,6 +47,10 @@ class _PostViewState extends State<PostView> {
           } else if (state is PostFailedState) {
             postPagingController.error = state.message ?? "Something went wrong. Try again after some time";
           } else if (state is PostLoadedState) {
+            if (state.pageKey == 0 && postPagingController.itemList != null && postPagingController.itemList!.isNotEmpty) {
+              postPagingController.itemList = [];
+            }
+
             if (state.postList.length < 15) {
               postPagingController.appendLastPage(state.postList);
             } else {
@@ -57,7 +61,8 @@ class _PostViewState extends State<PostView> {
         },
         builder: (context, state) {
           return RefreshIndicator(
-            onRefresh: () async {},
+            // onRefresh: () async => context.read<PostBloc>().add(PostLoading(0)),
+            onRefresh: () async => postPagingController.refresh(),
             child: PagedListView.separated(
               pagingController: postPagingController,
               padding: const EdgeInsets.all(16),
@@ -76,6 +81,8 @@ class _PostViewState extends State<PostView> {
                 ),
                 firstPageErrorIndicatorBuilder: (context) => const Text("First page error"),
                 noItemsFoundIndicatorBuilder: (context) => const Text("No item found"),
+                firstPageProgressIndicatorBuilder: null,
+                newPageProgressIndicatorBuilder: null,
               ),
             ),
           );
