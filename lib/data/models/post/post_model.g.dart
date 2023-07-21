@@ -13,7 +13,9 @@ PostModel _$PostModelFromJson(Map<String, dynamic> json) => PostModel(
       profileId: json['profile_id'] as int,
       profileImageUrl: json['profile_image_url'] as String?,
       name: json['name'] as String,
-      files: (json['files'] as List<dynamic>?)?.map((e) => PostFileModel.fromJson(e as Map<String, dynamic>)).toList(),
+      files: (json['files'] as List<dynamic>?)
+          ?.map((e) => PostFileModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
       likesCount: json['likes_count'] as int? ?? 0,
       commentsCount: json['comments_count'] as int? ?? 0,
       updatedAt: json['updated_at'] as String?,
