@@ -8,7 +8,7 @@ import 'package:social_media_block_demo/injection_container.dart';
 
 import '../../../core/enums/app_theme_mode.dart';
 import '../../../core/enums/language.dart';
-import '../../bloc/language/app_bloc.dart';
+import '../../bloc/app/app_bloc.dart';
 
 class HomePage extends StatelessWidget {
   final String id;

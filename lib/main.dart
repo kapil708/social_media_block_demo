@@ -6,7 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'core/route/app_router.dart';
 import 'core/theme/color_schemes.g.dart';
 import 'injection_container.dart' as di;
-import 'presentation/bloc/language/app_bloc.dart';
+import 'presentation/bloc/app/app_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
