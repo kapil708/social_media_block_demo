@@ -1,3 +1,6 @@
-arb-dir: assets/l10n # 1
-template-arb-file: app_en.arb # 2
-output-localization-file: app_localizations.dart # 3
+arb-dir: assets/l10n
+template-arb-file: app_en.arb
+output-localization-file: app_localizations.dart
+
+
+# command => flutter gen-l10n

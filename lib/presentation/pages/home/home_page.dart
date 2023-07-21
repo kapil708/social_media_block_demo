@@ -52,13 +52,13 @@ class HomeView extends StatelessWidget {
               child: const Text("Go to post screen"),
             ),
             const SizedBox(height: 24),
-            Text("Translation", style: Theme.of(context).textTheme.titleLarge),
+            Text("Translation", style: Theme.of(context).textTheme.displaySmall),
             const SizedBox(height: 16),
             Text(
               l10n.onboarding,
               style: Theme.of(context).textTheme.titleLarge,
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
             BlocBuilder<AppBloc, AppState>(
               builder: (context, state) {
                 return ListView.separated(
@@ -89,7 +89,7 @@ class HomeView extends StatelessWidget {
               },
             ),
             const SizedBox(height: 24),
-            Text("Theming", style: Theme.of(context).textTheme.titleLarge),
+            Text("Theming", style: Theme.of(context).textTheme.displaySmall),
             const SizedBox(height: 16),
             BlocBuilder<AppBloc, AppState>(
               builder: (context, state) {
