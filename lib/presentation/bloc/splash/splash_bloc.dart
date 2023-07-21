@@ -13,8 +13,7 @@ class SplashBloc extends Bloc<SplashEvent, SplashState> {
     on<SplashLoginCheck>((event, emit) async {
       await Future.delayed(const Duration(seconds: 2));
 
-      final LocalDataSource localDatSource = locator.get<LocalDataSource>();
-      bool isLogin = await localDatSource.isLogin();
+      bool isLogin = await locator.get<LocalDataSource>().isLogin();
 
       emit(SplashLoginChecked(isLogin));
     });

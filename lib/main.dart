@@ -4,8 +4,9 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 
 import 'core/route/app_router.dart';
+import 'core/theme/color_schemes.g.dart';
 import 'injection_container.dart' as di;
-import 'presentation/bloc/language/language_bloc.dart';
+import 'presentation/bloc/language/app_bloc.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -23,8 +24,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => LanguageBloc()..add(GetLanguage()),
-      child: BlocBuilder<LanguageBloc, LanguageState>(
+      create: (context) => AppBloc()..add(OnAppInit()),
+      child: BlocBuilder<AppBloc, AppState>(
         builder: (context, state) {
           return MaterialApp.router(
             debugShowCheckedModeBanner: false,
@@ -32,11 +33,9 @@ class MyApp extends StatelessWidget {
             routerConfig: _router,
 
             /// Theming
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-              useMaterial3: true,
-              scaffoldBackgroundColor: const Color(0xFFF3F1F2),
-            ),
+            themeMode: state.selectedThemeMode.value,
+            theme: ThemeData(useMaterial3: true, colorScheme: lightColorScheme),
+            darkTheme: ThemeData(useMaterial3: true, colorScheme: darkColorScheme),
 
             /// Localization
             locale: state.selectedLanguage.value,

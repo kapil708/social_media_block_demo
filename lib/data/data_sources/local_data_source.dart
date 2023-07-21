@@ -9,10 +9,13 @@ abstract class LocalDataSource {
   Future<void> cacheAuthToken(String authToken);
   Future<void> cacheLanguage(String languageCode);
   String? getLanguage();
+  Future<void> cacheThemeMode(String themeModeName);
+  String? getThemeMode();
 }
 
 const _authToken = 'authToken';
 const _languagePrefsKey = 'languagePrefs';
+const _themePrefsKey = 'themePrefs';
 
 class LocalDataSourceImpl implements LocalDataSource {
   final SharedPreferences sharedPreferences;
@@ -44,6 +47,11 @@ class LocalDataSourceImpl implements LocalDataSource {
   }
 
   @override
+  Future<void> cacheThemeMode(String themeModeName) {
+    return sharedPreferences.setString(_themePrefsKey, themeModeName);
+  }
+
+  @override
   Future<void> removeAuthToken() {
     return sharedPreferences.remove(_authToken);
   }
@@ -62,6 +70,16 @@ class LocalDataSourceImpl implements LocalDataSource {
   String? getLanguage() {
     try {
       final String? jsonString = sharedPreferences.getString(_languagePrefsKey);
+      return jsonString;
+    } on Exception catch (e) {
+      throw CacheException();
+    }
+  }
+
+  @override
+  String? getThemeMode() {
+    try {
+      final String? jsonString = sharedPreferences.getString(_themePrefsKey);
       return jsonString;
     } on Exception catch (e) {
       throw CacheException();

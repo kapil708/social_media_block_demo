@@ -6,8 +6,9 @@ import 'package:social_media_block_demo/core/route/route_names.dart';
 import 'package:social_media_block_demo/data/data_sources/local_data_source.dart';
 import 'package:social_media_block_demo/injection_container.dart';
 
-import '../../../core/language/language.dart';
-import '../../bloc/language/language_bloc.dart';
+import '../../../core/enums/app_theme_mode.dart';
+import '../../../core/enums/language.dart';
+import '../../bloc/language/app_bloc.dart';
 
 class HomePage extends StatelessWidget {
   final String id;
@@ -55,7 +56,9 @@ class HomeView extends StatelessWidget {
               style: Theme.of(context).textTheme.titleLarge,
             ),
             const SizedBox(height: 24),
-            BlocBuilder<LanguageBloc, LanguageState>(
+            Text("Translation", style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 16),
+            BlocBuilder<AppBloc, AppState>(
               builder: (context, state) {
                 return ListView.separated(
                   shrinkWrap: true,
@@ -73,7 +76,39 @@ class HomeView extends StatelessWidget {
                       ),
                       tileColor: language == state.selectedLanguage ? Theme.of(context).colorScheme.primary.withOpacity(0.05) : null,
                       onTap: () {
-                        context.read<LanguageBloc>().add(ChangeLanguage(selectedLanguage: language));
+                        context.read<AppBloc>().add(ChangeLanguage(selectedLanguage: language));
+                        //Future.delayed(const Duration(milliseconds: 300)).then((value) => Navigator.of(context).pop());
+                      },
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return const SizedBox(height: 16.0);
+                  },
+                );
+              },
+            ),
+            const SizedBox(height: 24),
+            Text("Theming", style: Theme.of(context).textTheme.titleLarge),
+            const SizedBox(height: 16),
+            BlocBuilder<AppBloc, AppState>(
+              builder: (context, state) {
+                return ListView.separated(
+                  shrinkWrap: true,
+                  itemCount: AppThemeMode.values.length,
+                  itemBuilder: (context, index) {
+                    AppThemeMode themeMode = AppThemeMode.values[index];
+
+                    return ListTile(
+                      leading: Icon(themeMode.iconData, size: 24),
+                      title: Text(themeMode.name),
+                      trailing: themeMode == state.selectedThemeMode ? const Icon(Icons.check_circle_rounded) : null,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        side: themeMode == state.selectedThemeMode ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5) : BorderSide(color: Colors.grey[300]!),
+                      ),
+                      tileColor: themeMode == state.selectedThemeMode ? Theme.of(context).colorScheme.primary.withOpacity(0.05) : null,
+                      onTap: () {
+                        context.read<AppBloc>().add(ChangeThemeMode(selectedThemeMode: themeMode));
                         //Future.delayed(const Duration(milliseconds: 300)).then((value) => Navigator.of(context).pop());
                       },
                     );
