@@ -1,5 +1,13 @@
 {
   "onboarding": "The Easy Way\nTo Manage Your\nDaily Expense ✨",
   "getStarted": "Get Started",
-  "haveAccount": "I Have Account"
+  "haveAccount": "I Have Account",
+  "usersCount": "you have {count} users",
+  "@usersCount": {"placeholders": {"count": {"type": "int"}}},
+  "welcomeMessage": "Hi, welcome {name} to the social",
+  "@welcomeMessage": {"placeholders": {"name": {"type": "String"}}},
+  "howAreYouUser": "How are you {name}",
+  "@howAreYouUser": {"placeholders": {"name": {"type": "String"}}},
+  "howAreYouUser1": "How are you {name} we have contact with {name1}",
+  "@howAreYouUser1": {"placeholders": {"name": {"type": "String"},"name1": {"type": "String"}}}
 }

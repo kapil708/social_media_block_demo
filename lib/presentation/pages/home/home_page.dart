@@ -35,92 +35,109 @@ class HomeView extends StatelessWidget {
         title: const Text('Home'),
         actions: [
           IconButton(
-            onPressed: () async {
-              await locator.get<LocalDataSource>().removeAuthToken();
-              context.goNamed(RouteNames.login);
+            onPressed: () {
+              locator.get<LocalDataSource>().removeAuthToken().then((value) {
+                context.goNamed(RouteNames.login);
+              });
             },
             icon: const Icon(Icons.logout),
           ),
         ],
       ),
-      body: Container(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          children: [
-            ElevatedButton(
-              onPressed: () => context.goNamed(RouteNames.post),
-              child: const Text("Go to post screen"),
-            ),
-            const SizedBox(height: 24),
-            Text("Translation", style: Theme.of(context).textTheme.displaySmall),
-            const SizedBox(height: 16),
-            Text(
-              l10n.onboarding,
-              style: Theme.of(context).textTheme.titleLarge,
-            ),
-            const SizedBox(height: 16),
-            BlocBuilder<AppBloc, AppState>(
-              builder: (context, state) {
-                return ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: Language.values.length,
-                  itemBuilder: (context, index) {
-                    Language language = Language.values[index];
+      body: SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            children: [
+              ElevatedButton(
+                onPressed: () => context.goNamed(RouteNames.post),
+                child: const Text("Go to post screen"),
+              ),
+              const SizedBox(height: 24),
+              Text("Translation", style: Theme.of(context).textTheme.displaySmall),
+              const SizedBox(height: 16),
+              Text(
+                l10n.onboarding,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              Text(
+                l10n.usersCount(100),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              Text(
+                l10n.welcomeMessage('Kapil Singh'),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              Text(
+                l10n.howAreYouUser1('Kapil Singh', 'Nitin Gadhiya'),
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+              const SizedBox(height: 16),
+              BlocBuilder<AppBloc, AppState>(
+                builder: (context, state) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: Language.values.length,
+                    itemBuilder: (context, index) {
+                      Language language = Language.values[index];
 
-                    return ListTile(
-                      leading: Image.asset(language.image, height: 32, width: 32),
-                      title: Text(language.text),
-                      trailing: language == state.selectedLanguage ? const Icon(Icons.check_circle_rounded) : null,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        side: language == state.selectedLanguage ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5) : BorderSide(color: Colors.grey[300]!),
-                      ),
-                      tileColor: language == state.selectedLanguage ? Theme.of(context).colorScheme.primary.withOpacity(0.05) : null,
-                      onTap: () {
-                        context.read<AppBloc>().add(ChangeLanguage(selectedLanguage: language));
-                        //Future.delayed(const Duration(milliseconds: 300)).then((value) => Navigator.of(context).pop());
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 16.0);
-                  },
-                );
-              },
-            ),
-            const SizedBox(height: 24),
-            Text("Theming", style: Theme.of(context).textTheme.displaySmall),
-            const SizedBox(height: 16),
-            BlocBuilder<AppBloc, AppState>(
-              builder: (context, state) {
-                return ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: AppThemeMode.values.length,
-                  itemBuilder: (context, index) {
-                    AppThemeMode themeMode = AppThemeMode.values[index];
+                      return ListTile(
+                        leading: Image.asset(language.image, height: 32, width: 32),
+                        title: Text(language.text),
+                        trailing: language == state.selectedLanguage ? const Icon(Icons.check_circle_rounded) : null,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          side: language == state.selectedLanguage ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5) : BorderSide(color: Colors.grey[300]!),
+                        ),
+                        tileColor: language == state.selectedLanguage ? Theme.of(context).colorScheme.primary.withOpacity(0.05) : null,
+                        onTap: () {
+                          context.read<AppBloc>().add(ChangeLanguage(selectedLanguage: language));
+                          //Future.delayed(const Duration(milliseconds: 300)).then((value) => Navigator.of(context).pop());
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 16.0);
+                    },
+                  );
+                },
+              ),
+              const SizedBox(height: 24),
+              Text("Theming", style: Theme.of(context).textTheme.displaySmall),
+              const SizedBox(height: 16),
+              BlocBuilder<AppBloc, AppState>(
+                builder: (context, state) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemCount: AppThemeMode.values.length,
+                    itemBuilder: (context, index) {
+                      AppThemeMode themeMode = AppThemeMode.values[index];
 
-                    return ListTile(
-                      leading: Icon(themeMode.iconData, size: 24),
-                      title: Text(themeMode.name),
-                      trailing: themeMode == state.selectedThemeMode ? const Icon(Icons.check_circle_rounded) : null,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(10.0),
-                        side: themeMode == state.selectedThemeMode ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5) : BorderSide(color: Colors.grey[300]!),
-                      ),
-                      tileColor: themeMode == state.selectedThemeMode ? Theme.of(context).colorScheme.primary.withOpacity(0.05) : null,
-                      onTap: () {
-                        context.read<AppBloc>().add(ChangeThemeMode(selectedThemeMode: themeMode));
-                        //Future.delayed(const Duration(milliseconds: 300)).then((value) => Navigator.of(context).pop());
-                      },
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(height: 16.0);
-                  },
-                );
-              },
-            ),
-          ],
+                      return ListTile(
+                        leading: Icon(themeMode.iconData, size: 24),
+                        title: Text(themeMode.name),
+                        trailing: themeMode == state.selectedThemeMode ? const Icon(Icons.check_circle_rounded) : null,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(10.0),
+                          side: themeMode == state.selectedThemeMode ? BorderSide(color: Theme.of(context).colorScheme.primary, width: 1.5) : BorderSide(color: Colors.grey[300]!),
+                        ),
+                        tileColor: themeMode == state.selectedThemeMode ? Theme.of(context).colorScheme.primary.withOpacity(0.05) : null,
+                        onTap: () {
+                          context.read<AppBloc>().add(ChangeThemeMode(selectedThemeMode: themeMode));
+                          //Future.delayed(const Duration(milliseconds: 300)).then((value) => Navigator.of(context).pop());
+                        },
+                      );
+                    },
+                    separatorBuilder: (context, index) {
+                      return const SizedBox(height: 16.0);
+                    },
+                  );
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

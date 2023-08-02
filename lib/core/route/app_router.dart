@@ -16,7 +16,7 @@ class AppRouter {
     errorBuilder: (context, state) => const Page404(),
     redirect: (context, state) async {
       print("state.path: ${state.location}");
-      if (state.location != '/') {
+      if (state.location != '/' && state.location != '/login') {
         bool isLogin = await localDatSource.isLogin();
         return isLogin ? null : '/login';
       } else {
